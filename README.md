@@ -4,8 +4,8 @@ DSA Copilot is an interactive learning platform for students who are learning da
 
 The project was collaboratively developed by:
 
-- **Ayushman Sahoo** — UPES, Dehradun
-- **Omm Biswajit Kanungo** — SOA University
+- **Ayushman Sahoo** — UPES, Dehradun   [https://github.com/AyushmanSahoo1170]
+- **Omm Biswajit Kanungo** — SOA University   [https://github.com/ommbiswajit07]
 - With the assistance of **OpenAI Codex** and **GPT-5.6 Luna**
 
 ## Problem statement
