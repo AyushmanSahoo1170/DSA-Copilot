@@ -1,0 +1,8 @@
+"use client";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { AuthProviderName, AuthSession, AuthUser, completeOAuthCallback, deleteAccount, getStoredSession, signIn, signInWithProvider, signOut, signUp, updateDisplayName } from "../lib/auth";
+type AuthContextValue = { user: AuthUser | null; session: AuthSession | null; loading: boolean; signUp: typeof signUp; signIn: typeof signIn; signInWithProvider: typeof signInWithProvider; updateDisplayName: typeof updateDisplayName; deleteAccount: typeof deleteAccount; signOut: typeof signOut; refresh: () => void };
+const AuthContext = createContext<AuthContextValue | null>(null);
+export function AuthProvider({ children }: { children: React.ReactNode }) { const [session, setSession] = useState<AuthSession | null>(null); const [loading, setLoading] = useState(true); const refresh = useCallback(() => setSession(getStoredSession()), []); useEffect(() => { refresh(); setLoading(false); const onChange = () => refresh(); window.addEventListener("dsa-auth-changed", onChange); window.addEventListener("storage", onChange); return () => { window.removeEventListener("dsa-auth-changed", onChange); window.removeEventListener("storage", onChange); }; }, [refresh]); const value = useMemo(() => ({ user: session?.user ?? null, session, loading, signUp, signIn, signInWithProvider, updateDisplayName, deleteAccount, signOut, refresh }), [loading, refresh, session]); return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>; }
+export function useAuth() { const context = useContext(AuthContext); if (!context) throw new Error("useAuth must be used inside AuthProvider."); return context; }
+export { completeOAuthCallback };
